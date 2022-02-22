@@ -1,0 +1,43 @@
+{
+	"name": "smart-reducer",
+	"version": "0.1.2",
+	"description": "An advanced, still very easy to use reducer for React",
+	"keywords": [
+		"react",
+		"reducer",
+		"useReducer",
+		"async-reducer",
+		"action",
+		"async-action",
+		"actions",
+		"state",
+		"state-manager",
+		"easy",
+		"easy-to-use",
+		"no-dispatch",
+		"no-reducer"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mirismaili/smart-reducer.git"
+	},
+	"license": "MIT",
+	"author": "S. Mahdi Mir-Ismaili <s.m.mirismaili@gmail.com>",
+	"type": "module",
+	"main": "src/main.js",
+	"files": [
+		"src"
+	],
+	"scripts": {
+		"patch-version": "npm version patch --no-git-tag-version",
+		"increase-minor-version": "npm version minor --no-git-tag-version",
+		"increase-major-version": "npm version major --no-git-tag-version",
+		"tag-this-version": "node -e \"require('child_process').execSync('git tag v' + require('./package.json').version)\"",
+		"build-version": "node -r child_process -p \"child_process.execSync('git rev-list --count HEAD').toString().trim() - child_process.execSync('git rev-list --count v' + require('./package.json').version).toString().trim()\""
+	},
+	"dependencies": {},
+	"devDependencies": {},
+	"engines": {
+		"node": ">=16"
+	}
+}
