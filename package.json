@@ -1,6 +1,6 @@
 {
   "name": "smart-reducer",
-  "version": "0.1.9",
+  "version": "0.2.1",
   "description": "An advanced, still very easy to use reducer for React",
   "keywords": [
     "react",
@@ -24,6 +24,7 @@
   "license": "MIT",
   "author": "S. Mahdi Mir-Ismaili <s.m.mirismaili@gmail.com>",
   "main": "src/main.js",
+  "module": "src/main.js",
   "files": [
     "src"
   ],
@@ -36,6 +37,9 @@
   },
   "dependencies": {},
   "devDependencies": {},
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
   "engines": {
     "node": ">=16"
   }

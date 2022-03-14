@@ -99,7 +99,10 @@ export function useSmartReducer(initialState, actions, logger, initializer) {
     (...actionArgs) => smartDispatch(actionName, action, actionArgs),
   ), [])
   
-  return {state, dispatchers, dispatch: simpleDispatch}
+  return Object.assign( // destructure-able using both ...
+    [state, dispatchers, simpleDispatch], // `[...]` and ...
+    {state, dispatchers, dispatch: simpleDispatch}, // `{...}` syntax
+  )
 }
 
 export default useSmartReducer
