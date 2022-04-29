@@ -7,7 +7,7 @@ import {useCallback, useMemo, useReducer} from 'react'
 import {o} from './util.js'
 
 function SmartReducer(logger) {
-  return (state, {dispatch, promiseController, actionName, action, actionArgsArr}) => {
+  return (state, {dispatch, deferredPromise, actionName, action, actionArgsArr}) => {
     const payloadOrPayloadPromise = action.apply(state, actionArgsArr)
   
     if (!(payloadOrPayloadPromise instanceof Promise)) { // => 1. SYNC ACTION:
@@ -27,7 +27,7 @@ function SmartReducer(logger) {
         actionName: `${actionName}:FULFILLED`,
         action: () => payload,
       })
-      promiseController.resolve(payload)
+      deferredPromise.resolve(payload)
     }, (err) => { // 2.1.2. ON-REJECT ACTION:
       const payload = err?.[payloadSym]
       if (payload) {
@@ -36,7 +36,7 @@ function SmartReducer(logger) {
           action: () => payload,
         })
       }
-      promiseController.reject(err)
+      deferredPromise.reject(err)
     })
   
     /** @see {@link useSmartReducer DUAL ACTIONS NOTE} */
@@ -55,12 +55,9 @@ function SmartReducer(logger) {
 
 const SmartDispatch = (dispatch) =>
   (actionName, action, actionArgsArr) => {
-    const promiseController = {}
-    const promise = new Promise((resolve, reject) => {
-      Object.assign(promiseController, {resolve, reject})
-    })
-    dispatch({dispatch, promiseController, actionName, action, actionArgsArr})
-    return promise
+    const deferredPromise = new DeferredPromise()
+    dispatch({dispatch, deferredPromise, actionName, action, actionArgsArr})
+    return deferredPromise
   }
 
 const SimpleDispatch = (dispatch) =>
@@ -120,3 +117,13 @@ export function simpleLogger(...args) {
 }
 
 export const payloadSym = Symbol('payload')
+
+class DeferredPromise extends Promise {
+  constructor() {
+    let promiseController
+    super((resolve, reject) => {
+      promiseController = {resolve, reject}
+    })
+    Object.assign(this, promiseController)
+  }
+}
