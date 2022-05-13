@@ -1,6 +1,6 @@
 # Smart-Reducer
 
-> An advanced, still very easy to use reducer for React
+> An advanced, still very easy-to-use reducer for React
 
 [![npm (scoped)](https://img.shields.io/npm/v/smart-reducer.svg)](https://npmjs.com/package/smart-reducer)
 [![install size](https://packagephobia.now.sh/badge?p=smart-reducer)](https://packagephobia.now.sh/result?p=smart-reducer)

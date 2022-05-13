@@ -61,14 +61,14 @@ const SmartDispatch = (dispatch) =>
   }
 
 const SimpleDispatch = (dispatch) =>
-  (payload, actionName = 'ANONYMOUS_ACTION') => {
-    dispatch({actionName, action: () => payload})
+  (payloadOrAction, actionName = 'ANONYMOUS_ACTION') => {
+    dispatch({actionName, action: typeof payloadOrAction === 'function' ? payloadOrAction : () => payloadOrAction})
   }
 
 /**
  * **DUAL ACTIONS NOTE**: The user **must NOT use `async/await`** keywords for his/her defined action, **if** he/she
  * wants to define a **dual-action (that has a `syncAction` in addition to `async` action)**. But he/she should just
- * return a `Promise` (everywhere needed). Otherwise his/her `syncAction` will be removed!
+ * return a `Promise` (everywhere needed). Otherwise, his/her `syncAction` will be removed!
  */
 export function useSmartReducer(initialState, actions, logger, initializer) {
   const {smartReducer, memorizedLogger} = useMemo(() => ({
