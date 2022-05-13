@@ -88,13 +88,13 @@ export function useSmartReducer(initialState, actions, logger, initializer) {
   // noinspection JSCheckFunctionSignatures
   const [state, dispatch] = useReducer(smartReducer, initializedState)
   
-  const smartDispatch = useCallback(SmartDispatch(dispatch), [dispatch])
+  const smartDispatch = useCallback(SmartDispatch(dispatch), [])
   
-  const simpleDispatch = useCallback(SimpleDispatch(dispatch), [dispatch])
+  const simpleDispatch = useCallback(SimpleDispatch(dispatch), [])
   
   const dispatchers = useMemo(() => o(actions).map((action, actionName) =>
     (...actionArgs) => smartDispatch(actionName, action, actionArgs),
-  ), [])
+  ).o, [])
   
   return Object.assign( // destructure-able using both ...
     [state, dispatchers, simpleDispatch], // `[...]` and ...
