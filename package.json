@@ -1,8 +1,8 @@
 {
-  "name": "smart-reducer",
-  "version": "0.3.0",
-  "description": "An advanced, still very easy-to-use reducer for React",
-  "keywords": [
+  "name" : "smart-reducer",
+  "version" : "0.3.1",
+  "description" : "An advanced, still very easy-to-use reducer for React",
+  "keywords" : [
     "react",
     "reducer",
     "useReducer",

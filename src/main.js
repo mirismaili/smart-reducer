@@ -118,12 +118,31 @@ export function simpleLogger(...args) {
 
 export const payloadSym = Symbol('payload')
 
+/**
+ * @see https://stackoverflow.com/a/48159603/5318303
+ */
 class DeferredPromise extends Promise {
   constructor() {
+    const executor = arguments[0]
+    if (executor) return super(executor)
+    
     let promiseController
     super((resolve, reject) => {
       promiseController = {resolve, reject}
     })
     Object.assign(this, promiseController)
+  }
+  
+  /**
+   * Return a `Promise` from then/catch/finally.
+   * @see https://stackoverflow.com/a/60328122/5318303
+   * @returns {PromiseConstructor}
+   */
+  static get [Symbol.species]() {
+    return Promise
+  }
+  
+  get [Symbol.toStringTag]() {
+    return 'DeferredPromise'
   }
 }
